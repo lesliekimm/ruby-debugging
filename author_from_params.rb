@@ -1,4 +1,6 @@
 class AuthorFromParams
+	attr_accessor :params
+
 	def initialize(params)
 		@params = params
 	end
@@ -10,7 +12,7 @@ class AuthorFromParams
 	end
 
 	def author_name_dig
-		self.dig(:author, :name)
+		@params.dig(:author, :name)
 	end
 
 	def age
@@ -18,13 +20,17 @@ class AuthorFromParams
 			@params[:author][:age]
 		end
 	end
+
+	def show
+		(:render).source_location
+	end
 end
 
-# lesliekimm = AuthorFromParams.new({ :author => { :name => "leslie kimm", :age => 27 } });
+
+# h = { foo: {bar: {baz: 1}}}
 #
-# puts lesliekimm.author_name
-# puts lesliekimm.age
+# h.dig(:foo, :bar, :baz)           #=> 1
+# h.dig(:foo, :zot, :xyz)           #=> nil
 #
-# juliekimm = AuthorFromParams.new({ :name => "julie kimm", :age => 26 });
-#
-# puts juliekimm.author_name
+# g = { foo: [10, 11, 12] }
+# g.dig(:foo, 1)
